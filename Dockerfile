@@ -17,13 +17,15 @@ EXPOSE 5901
 RUN useradd -g ${GGID} -u ${UUID} -m -r -d ${HOME} -s /bin/bash ${USER}
 RUN echo "${USER}:${USER}" | chpasswd
 
-RUN sudo dpkg --add-architecture i386 
+RUN dpkg --add-architecture i386 
 
-RUN apt update && apt install -y wget sudo && \
-    wget -nc -qO- https://dl.winehq.org/wine-builds/winehq.key | apt-key add - && \
-    apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' && \
-    apt update && \
-    apt install --install-recommends winehq-staging
+RUN apt update
+RUN apt install -y wget sudo gnupg2 software-properties-common
+
+RUN wget -nc -qO- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
+RUN apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+RUN apt update
+RUN apt install -y --install-recommends winehq-staging
 
 RUN echo -e "\n${USER}        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
 
