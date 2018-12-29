@@ -1,6 +1,8 @@
 # Docker-WineHQ-VNC
 A docker for run Wine though VNC remote manage
 
+## Quick start
+
 Begin, pull image from Docker hub:
 
 `sudo docker pull johnshine/winehq-vnc:latest`
